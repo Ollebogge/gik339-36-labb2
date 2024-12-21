@@ -1,26 +1,25 @@
 async function fetchUsers() {
-  const response = await fetch("http://localhost:3000/users")
-  
+  const response = await fetch("http://localhost:3000/users");
   const users = await response.json();
 
   console.log(users);
   return users;
-  showUsers(users);
 }
 
-async function showUsers(users) {
-  const usersList = document.getElementById("users-List");
+function displayUsers(users) {
+  const userList = document.getElementById("users-list");
 
   users.forEach(user => {
-    const listItem = document.createElement("li")
-
-    listItem.innerHTML =`
-    <div style="color: ${user.color};">
-        <h2>${user.firstname} ${user.lastname}</h2>
-        <p>Username: ${user.username}</p>
-    </div>
-    `;
-    usersList.appendChild(listItem);
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `
+          <div style="background-color: ${user.color}; padding: 10px; border-radius: 5px;">
+                <h3>${user.firstName} ${user.lastName}</h3>
+                <p>Username: ${user.username}</p>
+            </div>
+      `;
+      userList.appendChild(listItem);
   });
 }
-fetchUsers();
+fetchUsers().then(users => {
+  displayUsers(users);
+});
